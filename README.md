@@ -18,11 +18,11 @@ Execution Commands :
 
 <h3>Screenshots</h3>
 
-![Landing Page](image/landing.png)
+![Landing Page](https://i.ibb.co/n6VTNXz/Screenshot-2019-07-24-at-7-58-21-AM.png)
 
-![Source and Destination](image/source_and_destination.png)
+![Source and Destination](https://i.ibb.co/2WrK4Vj/Screenshot-2019-07-24-at-7-58-37-AM.png)
 
-![Movement](image/movement.png)
+![Movement](https://i.ibb.co/z8R907r/Screenshot-2019-07-24-at-7-59-19-AM.png)
 
 
 DIRECTORY STRUCTURE
