@@ -17,12 +17,12 @@ Execution Commands :
 </ul>
 
 <h3>Screenshots</h3>
-Landing Page
-![](image/landing.png)
-Source and Destination
-![](image/source_and_destination.png)
-Movement
-![](image/movement.png)
+
+![Landing Page](image/landing.png)
+
+![Source and Destination](image/source_and_destination.png)
+
+![Movement](image/movement.png)
 
 
 DIRECTORY STRUCTURE
