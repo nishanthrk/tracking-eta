@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="main.js"></script>
+    <script src="main.js?<?= strtotime('now') ?>"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGbjymNN5vlknRZgGz8PBbKd7Sulf_bBc&callback=initMap"></script>
 </head>
 <body>
