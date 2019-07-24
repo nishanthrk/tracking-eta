@@ -7,6 +7,7 @@
 require_once '../vendor/autoload.php';
 include_once '../config/ApiResponse.php';
 include_once '../config/Database.php';
+include_once '../config/Utility.php';
 
 // required headers
 header("Access-Control-Allow-Origin: *");
@@ -18,6 +19,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $apiResponse = new ApiResponse();
 $client = new Predis\Client();
 $database = new Database();
+$utility = new Utility();
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -28,20 +30,26 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $apiResponse->ok(1, $result);
 
-} elseif(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST' && !empty($data->orderId) && !empty($data->status)) {
+} elseif(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST' && !empty($data->orderId) && !empty($data->status)
+    && !empty($data->originLat) && !empty($data->originLng) && !empty($data->destinationLat) && !empty($data->destinationLng)) {
 
     $orderId = 'ORDER::'.  $data->orderId;
 
     try {
+
         $order = json_decode($client->get($orderId), true);
+
+        if ($data->status == 'FINISHED_DELIVERY') {
+            $radius = $utility->haversineGreatCircleDistance($data->originLat, $data->originLng, $data->destinationLat, $data->destinationLng);
+            if ($radius > 0.2) {
+                $apiResponse->unprocessableEntity(-2, 'You cannot end because youre too far from the delivery location');
+            }
+            $client->set('LAST_LOCATION', json_encode(['lat' => $order['lat'], 'lng' => $order['lng']]));
+        }
 
         $order['status'] = $data->status;
 
         $client->set($orderId, json_encode($order));
-
-        if ($data->status == 'FINISHED_DELIVERY') {
-            $client->set('LAST_LOCATION', json_encode(['lat' => $order['lat'], 'lng' => $order['lng']]));
-        }
 
         $result = $database->getOrder();
 
