@@ -23,13 +23,13 @@ class ApiResponse
     public function data($status, $data, $httpStatusCode)
     {
         http_response_code($httpStatusCode);
-        echo json_encode(['status' => $status, 'data' => $data]);
+        echo json_encode(['status' => $status, 'data' => $data]);die;
     }
 
     public function error($status, $error, $httpStatusCode)
     {
         http_response_code($httpStatusCode);
-        echo json_encode(['status' => $status, 'error' => $error]);
+        echo json_encode(['status' => $status, 'error' => $error]);die;
     }
 
     /**

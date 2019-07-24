@@ -50,6 +50,7 @@ orderLocationApp.controller('controller-order-location', function ($rootScope, $
     $scope.current = [];
     $scope.orders = [];
     $scope.polyLineEnable = false;
+    $scope.cooridates = [];
 
     function reInitMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -71,6 +72,12 @@ orderLocationApp.controller('controller-order-location', function ($rootScope, $
     }
 
     $scope.calculateEta = function(originLat, originLng, destinationLat, destinationLng) {
+
+        $scope.cooridates.originLat = originLat;
+        $scope.cooridates.originLng = originLng;
+        $scope.cooridates.destinationLat = destinationLat;
+        $scope.cooridates.destinationLng = destinationLng;
+
         var request = {
             method: 'POST',
             url: baseUrl + '/api/distance.php',
@@ -180,7 +187,11 @@ orderLocationApp.controller('controller-order-location', function ($rootScope, $
             headers: {'Content-Type': 'application/json'},
             data: {
                 orderId: id,
-                status: status
+                status: status,
+                originLat: $scope.cooridates.originLat,
+                originLng: $scope.cooridates.originLng,
+                destinationLat: $scope.cooridates.destinationLat,
+                destinationLng: $scope.cooridates.destinationLng
             }
         };
         $http(request)
@@ -196,7 +207,7 @@ orderLocationApp.controller('controller-order-location', function ($rootScope, $
                     }
                 },
                 function (error) {
-                    alert('Some error. Contact Nishanth.');
+                    handelResponseError(error);
                 }
             );
     }
